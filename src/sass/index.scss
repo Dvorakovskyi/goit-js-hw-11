@@ -1,2 +1,6 @@
-@import './common';
-@import './example';
+// base
+@import './base/reset';
+@import './base/common';
+
+// components
+@import './components/main-page';
