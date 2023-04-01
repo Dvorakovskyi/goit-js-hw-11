@@ -1,3 +1,22 @@
 .search-btn {
+    margin-left: 5px;
     cursor: pointer;
+}
+
+.search-form {
+    display: flex;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px;  
+}
+
+.photo-card {
+    width: 340px;
+}
+
+.info {
+    display: flex;
 }
