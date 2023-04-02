@@ -5,16 +5,20 @@ const formEl = document.querySelector('.search-form');
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtnEl = document.querySelector('.load-more-btn');
 
+let cardInfo = null;
+
 const pixabayAPI = new PixabayAPI();
 
 const handleSearchPhotos = event => {
   event.preventDefault();
 
+  pixabayAPI.page = 1;
+
   const searchQuery = event.target.elements['searchQuery'].value.trim();
 
   pixabayAPI.q = searchQuery;
 
-  pixabayAPI.fetchPhotos(searchQuery).then(data => {
+  pixabayAPI.fetchPhotos().then(data => {
     if (data.hits.length === 0 || searchQuery === '') {
       cleanInfo();
 
@@ -22,27 +26,33 @@ const handleSearchPhotos = event => {
 
       Notify.failure('Sorry, there are no images matching your search query. Please try again.');
     } else {
-      createCardInfo(data.hits);
+      console.log(data);
+      Notify.success('Done!');
 
-      pixabayAPI.page = 1;
+      createCardInfo(data.hits);
+      galleryEl.innerHTML = cardInfo;
 
       loadMoreBtnEl.classList.remove('is-hidden');
     }
   });
 };
 
-// const handleLoadMoreClick = () => {
-// }
+const handleLoadMoreClick = () => {
+  pixabayAPI.page += 1;
+
+  pixabayAPI.fetchPhotos().then(data => {
+    createCardInfo(data.hits);
+    galleryEl.insertAdjacentHTML('beforeend', cardInfo);
+  })
+}
 
 formEl.addEventListener('submit', handleSearchPhotos);
-// loadMoreBtnEl.addEventListener('click', handleLoadMoreClick);
+loadMoreBtnEl.addEventListener('click', handleLoadMoreClick);
 
 const createCardInfo = data => {
   console.log(data);
-
-  Notify.success('Done!');
-  
-  const cardInfo = data
+ 
+  cardInfo = data
     .map(
       data => `
     <div class="photo-card">
@@ -65,8 +75,6 @@ const createCardInfo = data => {
     `
     )
     .join('');
-
-  galleryEl.innerHTML = cardInfo;
 };
 
 const cleanInfo = () => {
