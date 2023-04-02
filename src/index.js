@@ -25,7 +25,7 @@ const createCardInfo = data => {
     .map(
       data => `
     <div class="photo-card">
-      <img src=${data.webformatURL} alt="${data.tags}" loading="lazy" />
+      <img class="gallery-img" src=${data.webformatURL} alt="${data.tags}" loading="lazy" />
       <div class="info">
         <p class="info-item">
         <b>Likes ${data.likes}</b>
@@ -47,25 +47,3 @@ const createCardInfo = data => {
 
   galleryEl.innerHTML = cardInfo;
 };
-
-// const cardInfo = data.hits
-//                     .map(data =>
-//                         `<div class="photo-card">
-//                 <img src=${data.hits.webformatURL} alt=${data.hits.tags} loading="lazy" />
-//                 <div class="info">
-//                     <p class="info-item">
-//                     <b>${data.hits.likes}</b>
-//                     </p>
-//                     <p class="info-item">
-//                     <b>${data.hits.views}</b>
-//                     </p>
-//                     <p class="info-item">
-//                     <b>${data.hits.comments}</b>
-//                     </p>
-//                     <p class="info-item">
-//                     <b>${data.hits.downloads}</b>
-//                     </p>
-//                 </div>
-//                 </div>`).join('');
-
-//                 galleryEl.innerHTML = cardInfo;
