@@ -5,22 +5,27 @@ export class PixabayAPI {
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
+        per_page: 40,
     };
     q = null;
+    page = 1;
 
-    fetchPhotos = () => {
+    fetchPhotos = async () => {
         const serchParams = new URLSearchParams({
             ...this.#BASE_PARAMS,
             q: this.q,
+            page: this.page,
         })
 
-        return fetch(`${this.#BASE_URL}?key=${this.#API_KEY}&${serchParams}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(response.status)
-                }
-                return response.json();
+        try {
+            const response = await fetch(`${this.#BASE_URL}?key=${this.#API_KEY}&${serchParams}`)
+
+            if (!response.ok) {
+                throw new Error(response.status)
             }
-        )
+
+            return await response.json();
+
+        } catch (error) {}       
     }
 }

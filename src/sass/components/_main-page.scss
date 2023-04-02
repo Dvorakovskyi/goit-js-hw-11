@@ -1,9 +1,3 @@
-.search-btn {
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-}
-
 .search-form {
     position: fixed;
     padding-top: 10px;
@@ -17,6 +11,7 @@
 
 input {
     padding-left: 10px;
+    margin-right: 5px;
     width: 400px;
     height: 30px;
     border-radius: 5px;
@@ -24,6 +19,19 @@ input {
     border: none;
 }
 
+.search-btn {
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    align-items: center;
+
+    background-color: white;
+
+    &:hover,
+    &:focus {
+        background-color: #DEDEDE;
+    }
+}
 
 .gallery {
     display: flex;
@@ -55,4 +63,30 @@ input {
 .gallery-img {
     width: 300px;
     height: 200px;
+}
+
+.load-more-btn {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    background-color: #d8e9f7;
+    cursor: pointer;
+    
+    &:hover,
+    &:focus {
+        background-color: #DEDEDE;
+    }
+}
+
+.is-hidden {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
 }
