@@ -1,9 +1,11 @@
 import { PixabayAPI } from './js/pixabayAPI';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const formEl = document.querySelector('.search-form');
 const galleryEl = document.querySelector('.gallery');
-const loadMoreBtnEl = document.querySelector('.load-more-btn');
+const loadMoreBtnEl = document.querySelector('.load-more');
 
 let cardInfo = null;
 
@@ -26,13 +28,17 @@ const handleSearchPhotos = event => {
 
       Notify.failure('Sorry, there are no images matching your search query. Please try again.');
     } else {
-      console.log(data);
-      Notify.success('Done!');
+      Notify.success(`Hooray! We found ${data.totalHits} images.`);
 
       createCardInfo(data.hits);
+
       galleryEl.innerHTML = cardInfo;
 
       loadMoreBtnEl.classList.remove('is-hidden');
+    }
+    
+    if (data.hits.length < 40) {
+      loadMoreBtnEl.classList.add('is-hidden');
     }
   });
 };
@@ -42,7 +48,14 @@ const handleLoadMoreClick = () => {
 
   pixabayAPI.fetchPhotos().then(data => {
     createCardInfo(data.hits);
+
     galleryEl.insertAdjacentHTML('beforeend', cardInfo);
+
+    if (data.hits.length < 40) {
+      Notify.info('We`re sorry, but you`ve reached the end of search results.');
+
+      loadMoreBtnEl.classList.add('is-hidden');
+    }
   })
 }
 
@@ -50,8 +63,6 @@ formEl.addEventListener('submit', handleSearchPhotos);
 loadMoreBtnEl.addEventListener('click', handleLoadMoreClick);
 
 const createCardInfo = data => {
-  console.log(data);
- 
   cardInfo = data
     .map(
       data => `
