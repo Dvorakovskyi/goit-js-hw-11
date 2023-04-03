@@ -1,7 +1,5 @@
 import { PixabayAPI } from './js/pixabayAPI';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
 
 const formEl = document.querySelector('.search-form');
 const galleryEl = document.querySelector('.gallery');
@@ -14,6 +12,8 @@ const pixabayAPI = new PixabayAPI();
 const handleSearchPhotos = event => {
   event.preventDefault();
 
+  cleanInfo();
+  
   pixabayAPI.page = 1;
 
   const searchQuery = event.target.elements['searchQuery'].value.trim();
@@ -89,5 +89,7 @@ const createCardInfo = data => {
 };
 
 const cleanInfo = () => {
+  loadMoreBtnEl.classList.add('is-hidden');
+
   galleryEl.innerHTML = '';
 }
