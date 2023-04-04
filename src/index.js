@@ -1,11 +1,15 @@
 import { PixabayAPI } from './js/pixabayAPI';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const formEl = document.querySelector('.search-form');
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtnEl = document.querySelector('.load-more');
 
 let cardInfo = null;
+
+new SimpleLightbox('.gallery a');
 
 const pixabayAPI = new PixabayAPI();
 
@@ -65,7 +69,8 @@ loadMoreBtnEl.addEventListener('click', handleLoadMoreClick);
 const createCardInfo = data => {
   cardInfo = data
     .map(
-      data => `
+      data => ` 
+    <a class="gallery__item" href="${data.largeImageURL}">     
     <div class="photo-card">
       <img class="gallery-img" src=${data.webformatURL} alt="${data.tags}" loading="lazy"/>
       <div class="info">
@@ -82,7 +87,8 @@ const createCardInfo = data => {
         <b>Downloads ${data.downloads}</b>
         </p>
       </div>
-    </div>
+    </div>  
+    </a>
     `
     )
     .join('');
