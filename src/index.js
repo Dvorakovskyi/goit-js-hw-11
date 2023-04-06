@@ -7,13 +7,13 @@ const formEl = document.querySelector('.search-form');
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtnEl = document.querySelector('.load-more');
 
-let cardInfo = null;
-
 // Бібліотека SimpleLightbox
 const simplelightbox = new SimpleLightbox('.gallery a');
 
 // PixabayAPI
 const pixabayAPI = new PixabayAPI();
+
+let cardInfo = null;
 
 const handleSearchPhotos = event => {
   event.preventDefault();
