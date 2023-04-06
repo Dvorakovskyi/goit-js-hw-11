@@ -9,8 +9,10 @@ const loadMoreBtnEl = document.querySelector('.load-more');
 
 let cardInfo = null;
 
-new SimpleLightbox('.gallery a');
+// Бібліотека SimpleLightbox
+const simplelightbox = new SimpleLightbox('.gallery a');
 
+// PixabayAPI
 const pixabayAPI = new PixabayAPI();
 
 const handleSearchPhotos = event => {
@@ -38,6 +40,8 @@ const handleSearchPhotos = event => {
 
       galleryEl.innerHTML = cardInfo;
 
+      simplelightbox.refresh();
+
       loadMoreBtnEl.classList.remove('is-hidden');
     }
     
@@ -55,6 +59,8 @@ const handleLoadMoreClick = () => {
 
     galleryEl.insertAdjacentHTML('beforeend', cardInfo);
 
+    simplelightbox.refresh();
+
     if (data.hits.length < 40) {
       Notify.info('We`re sorry, but you`ve reached the end of search results.');
 
@@ -69,10 +75,11 @@ loadMoreBtnEl.addEventListener('click', handleLoadMoreClick);
 const createCardInfo = data => {
   cardInfo = data
     .map(
-      data => ` 
-    <a class="gallery__item" href="${data.largeImageURL}">     
+      data => `   
     <div class="photo-card">
+    <a class="gallery__item" href="${data.largeImageURL}"> 
       <img class="gallery-img" src=${data.webformatURL} alt="${data.tags}" loading="lazy"/>
+    </a>
       <div class="info">
         <p class="info-item">
         <b>Likes ${data.likes}</b>
@@ -88,7 +95,6 @@ const createCardInfo = data => {
         </p>
       </div>
     </div>  
-    </a>
     `
     )
     .join('');
